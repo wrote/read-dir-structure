@@ -1,5 +1,7 @@
-import wroteReadDirStructure from '@wrote/read-dir-structure'
+/* yarn example/ */
+import readDirStructure from '../src'
 
 (async () => {
-  await wroteReadDirStructure()
+  const res = await readDirStructure('example/directory')
+  console.log(JSON.stringify(res, null, 2))
 })()

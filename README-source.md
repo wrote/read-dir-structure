@@ -10,11 +10,7 @@ yarn add -E @wrote/read-dir-structure
 
 ## Table Of Contents
 
-- [Table Of Contents](#table-of-contents)
-- [API](#api)
-  * [`Structure` Type](#structure-type)
-  * [`async readDirStructure(path: string): Structure`](#async-readdirstructurepath-string-structure)
-  * [Errors](#errors)
+%TOC%
 
 ## API
 
@@ -28,25 +24,24 @@ import readDirStructure from '@wrote/read-dir-structure
 
 The return type of the function is a directory `Structure`. It is an associative array which contains the next properties:
 
-| Property | Type | Description |
-| -------- | ---- | ----------- |
-| type | `string` | The result of the _lstat_ and One of the following: `Directory`, `File`, `SymbolicLink` |
-| content | `Structure` | If the type is `Directory`, the object will also have a `content` which also is a `Structure`. Therefore, the whole nested structure will be read. See below for an example. |
+```table
+[
+  ["Property", "Type", "Description"],
+  ["type", "`string`", "The result of the _lstat_ and One of the following: `Directory`, `File`, `SymbolicLink`"],
+  ["content", "`Structure`", "If the type is `Directory`, the object will also have a `content` which also is a `Structure`. Therefore, the whole nested structure will be read. See below for an example."]
+]
+```
 
 
-### `async readDirStructure(`<br/>&nbsp;&nbsp;`path: string,`<br/>`): Structure`
+```### async readDirStructure => Structure
+[
+  ["path", "string"]
+]
+```
 
 Reads the structure of the directory.
 
-```javascript
-/* yarn example/ */
-import readDirStructure from '@wrote/read-dir-structure'
-
-(async () => {
-  const res = await readDirStructure('example/directory')
-  console.log(JSON.stringify(res, null, 2))
-})()
-```
+%EXAMPLE: example/example.js, ../src => @wrote/read-dir-structure, javascript%
 
 Output for the [`example/directory`](example/directory):
 
@@ -85,9 +80,12 @@ Output for the [`example/directory`](example/directory):
 
 ### Errors
 
-| code | Message |
-| ---- | ------- |
-|  |
+```table
+[
+  ["code", "Message"],
+  []
+]
+```
 
 ---
 
