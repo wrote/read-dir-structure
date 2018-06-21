@@ -1,0 +1,45 @@
+{
+  "name": "@wrote/read-dir-structure",
+  "version": "1.0.0",
+  "description": "Read directory structure.",
+  "main": "build",
+  "scripts": {
+    "t": "zoroaster -b",
+    "test": "zoroaster -b test/spec",
+    "test-build": "BABEL_ENV=test-build yarn test",
+    "test-all": "yarn-s test test-build",
+    "test-watch": "yarn test -w",
+    "lint": "eslint .",
+    "e": "node example",
+    "example/": "yarn e example/example.js",
+    "build": "babel src --out-dir build --source-maps"
+  },
+  "files": [
+    "build"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/artdecocode/-wrote-read-dir-structure.git"
+  },
+  "keywords": [
+    "@wrote/read-dir-structure"
+  ],
+  "author": "Anton <anton@adc.sh>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/artdecocode/-wrote-read-dir-structure/issues"
+  },
+  "homepage": "https://github.com/artdecocode/-wrote-read-dir-structure#readme",
+  "devDependencies": {
+    "@babel/cli": "7.0.0-beta.49",
+    "@babel/core": "7.0.0-beta.49",
+    "@babel/plugin-syntax-object-rest-spread": "7.0.0-beta.49",
+    "@babel/plugin-transform-modules-commonjs": "7.0.0-beta.49",
+    "@babel/register": "7.0.0-beta.49",
+    "babel-plugin-transform-rename-import": "2.2.0",
+    "eslint": "4.19.1",
+    "eslint-config-artdeco": "1.0.0",
+    "yarn-s": "1.1.0",
+    "zoroaster": "2.1.0"
+  }
+}
