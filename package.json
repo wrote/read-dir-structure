@@ -1,7 +1,7 @@
 {
   "name": "@wrote/read-dir-structure",
   "version": "1.0.0",
-  "description": "Read directory structure.",
+  "description": "Reads directory structure.",
   "main": "build",
   "scripts": {
     "t": "zoroaster -b",
@@ -20,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/artdecocode/-wrote-read-dir-structure.git"
+    "url": "git://github.com/artdecocode/read-dir-structure.git"
   },
   "keywords": [
     "@wrote/read-dir-structure"
@@ -28,9 +28,9 @@
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/artdecocode/-wrote-read-dir-structure/issues"
+    "url": "https://github.com/artdecocode/read-dir-structure/issues"
   },
-  "homepage": "https://github.com/artdecocode/-wrote-read-dir-structure#readme",
+  "homepage": "https://github.com/artdecocode/read-dir-structure#readme",
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.51",
     "@babel/core": "7.0.0-beta.51",
