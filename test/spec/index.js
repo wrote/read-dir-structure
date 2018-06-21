@@ -58,6 +58,11 @@ const T = {
     const res = await readDirStructure(FIXTURES_TEST_DIR)
     await test('dir-structure.json', res)
   },
+  // async 'reads a nested directory structure'({ NESTED_FIXTURES_TEST_DIR, SNAPSHOT_DIR }, { setDir, test }) {
+  //   setDir(SNAPSHOT_DIR)
+  //   const res = await readDirStructure(NESTED_FIXTURES_TEST_DIR)
+  //   await test('dir-structure.json', res)
+  // },
 }
 
 export default T

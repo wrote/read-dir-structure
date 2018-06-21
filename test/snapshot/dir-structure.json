@@ -1,0 +1,11 @@
+{
+  "content": {
+    "dir-ln": {
+      "type": "SymbolicLink"
+    },
+    "index.js": {
+      "type": "File"
+    }
+  },
+  "type": "Directory"
+}

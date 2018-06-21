@@ -21,8 +21,11 @@ export default class Context {
   get FIXTURES_TEST_DIR() {
     return dir
   }
+  get NESTED_FIXTURES_TEST_DIR() {
+
+  }
   get SNAPSHOT_DIR() {
-    return resolve('../snapshot')
+    return resolve(__dirname, '../snapshot')
   }
   get FIXTURES_TEST_DIR_SOFT_LINK() {
     return resolve(dir, 'dir-ln')
