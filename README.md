@@ -83,7 +83,7 @@ Output for the [`example/directory`](example/directory):
 
 ### Reasons for Errors
 
-The following errors can happen and [have been tested against](test/spec/errors.js):
+The following errors can happen and have been [context tested](test/spec/errors.js) against:
 
 | Happens when... | code | Message |
 | --------------- | ---- | ------- |
