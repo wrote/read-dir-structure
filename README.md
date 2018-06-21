@@ -14,14 +14,14 @@ yarn add -E @wrote/read-dir-structure
 - [API](#api)
   * [`Structure` Type](#structure-type)
   * [`async readDirStructure(path: string): Structure`](#async-readdirstructurepath-string-structure)
-  * [Errors](#errors)
+  * [Reasons for Errors](#reasons-for-errors)
 
 ## API
 
 There is a single default export function, import it with the following statement:
 
 ```js
-import readDirStructure from '@wrote/read-dir-structure
+import readDirStructure from '@wrote/read-dir-structure'
 ```
 
 ### `Structure` Type
@@ -30,7 +30,7 @@ The return type of the function is a directory `Structure`. It is an associative
 
 | Property | Type | Description |
 | -------- | ---- | ----------- |
-| type | `string` | The result of the _lstat_ and One of the following: `Directory`, `File`, `SymbolicLink` |
+| type | `string` | The result of the _lstat_ and one of the following: `Directory`, `File`, `SymbolicLink`. |
 | content | `Structure` | If the type is `Directory`, the object will also have a `content` which also is a `Structure`. Therefore, the whole nested structure will be read. See below for an example. |
 
 
@@ -44,6 +44,7 @@ import readDirStructure from '@wrote/read-dir-structure'
 
 (async () => {
   const res = await readDirStructure('example/directory')
+  const res2 = await readDirStructure('example')
   console.log(JSON.stringify(res, null, 2))
 })()
 ```
@@ -53,13 +54,13 @@ Output for the [`example/directory`](example/directory):
 ```json
 {
   "content": {
+    "fileA-ln.txt": {
+      "type": "SymbolicLink"
+    },
     "fileA.txt": {
       "type": "File"
     },
     "fileB.txt": {
-      "type": "File"
-    },
-    "fileC.txt": {
       "type": "File"
     },
     "test.json": {
@@ -83,11 +84,16 @@ Output for the [`example/directory`](example/directory):
 }
 ```
 
-### Errors
+### Reasons for Errors
 
-| code | Message |
-| ---- | ------- |
-|  |
+The following errors can happen and have been tested against:
+
+| Happens when... | code | Message |
+| --------------- | ---- | ------- |
+| not passing any path | `-` | Please specify a path to the directory |
+| passing a path to a symbolic link | `ENOTDIR` | Path is not a directory |
+| passing a path to a file | `ENOTDIR` | Path is not a directory |
+| directory does not exist | `ENOENT` | ENOENT: no such file or directory, lstat '%DIRECTORY%' |
 
 ---
 

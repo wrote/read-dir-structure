@@ -17,7 +17,7 @@ yarn add -E @wrote/read-dir-structure
 There is a single default export function, import it with the following statement:
 
 ```js
-import readDirStructure from '@wrote/read-dir-structure
+import readDirStructure from '@wrote/read-dir-structure'
 ```
 
 ### `Structure` Type
@@ -27,7 +27,7 @@ The return type of the function is a directory `Structure`. It is an associative
 ```table
 [
   ["Property", "Type", "Description"],
-  ["type", "`string`", "The result of the _lstat_ and One of the following: `Directory`, `File`, `SymbolicLink`"],
+  ["type", "`string`", "The result of the _lstat_ and one of the following: `Directory`, `File`, `SymbolicLink`."],
   ["content", "`Structure`", "If the type is `Directory`, the object will also have a `content` which also is a `Structure`. Therefore, the whole nested structure will be read. See below for an example."]
 ]
 ```
@@ -48,13 +48,13 @@ Output for the [`example/directory`](example/directory):
 ```json
 {
   "content": {
+    "fileA-ln.txt": {
+      "type": "SymbolicLink"
+    },
     "fileA.txt": {
       "type": "File"
     },
     "fileB.txt": {
-      "type": "File"
-    },
-    "fileC.txt": {
       "type": "File"
     },
     "test.json": {
@@ -78,12 +78,17 @@ Output for the [`example/directory`](example/directory):
 }
 ```
 
-### Errors
+### Reasons for Errors
+
+The following errors can happen and have been tested against:
 
 ```table
 [
-  ["code", "Message"],
-  []
+  ["Happens when...", "code", "Message"],
+  ["not passing any path", "`-`", "Please specify a path to the directory"],
+  ["passing a path to a symbolic link", "`ENOTDIR`", "Path is not a directory"],
+  ["passing a path to a file", "`ENOTDIR`", "Path is not a directory"],
+  ["directory does not exist", "`ENOENT`", "ENOENT: no such file or directory, lstat '%DIRECTORY%'"]
 ]
 ```
 
