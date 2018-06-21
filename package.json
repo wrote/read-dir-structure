@@ -10,10 +10,11 @@
     "test-all": "yarn-s test test-build",
     "test-watch": "yarn test -w",
     "lint": "eslint .",
-    "doc": "doc README-source.md -o README.md",
+    "doc": "NODE_DEBUG=doc doc README-source.md -o README.md",
     "e": "node example",
     "example/": "yarn e example/example.js",
-    "build": "babel src --out-dir build --source-maps"
+    "build-src": "babel src --out-dir build --source-maps",
+    "build": "yarn-s doc build-src"
   },
   "files": [
     "build"
