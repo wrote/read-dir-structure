@@ -78,7 +78,7 @@ Output for the [`example/directory`](example/directory):
 
 ### Reasons for Errors
 
-The following errors can happen and have been tested against:
+The following errors can happen and [have been tested against](test/spec/errors.js):
 
 ```table
 [
