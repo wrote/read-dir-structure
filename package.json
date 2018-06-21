@@ -23,7 +23,9 @@
     "url": "git://github.com/artdecocode/read-dir-structure.git"
   },
   "keywords": [
-    "@wrote/read-dir-structure"
+    "@wrote/read-dir-structure",
+    "directory",
+    "read"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
