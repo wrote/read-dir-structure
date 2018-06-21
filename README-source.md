@@ -60,18 +60,16 @@ Output for the [`example/directory`](example/directory):
     "test.json": {
       "type": "File"
     },
-    "d": {
-      "subdirectory": {
-        "content": {
-          "subdirFileA.txt": {
-            "type": "File"
-          },
-          "subdirFileB.txt": {
-            "type": "File"
-          }
+    "subdirectory": {
+      "content": {
+        "subdirFileA.txt": {
+          "type": "File"
         },
-        "type": "Directory"
-      }
+        "subdirFileB.txt": {
+          "type": "File"
+        }
+      },
+      "type": "Directory"
     }
   },
   "type": "Directory"

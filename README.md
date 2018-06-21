@@ -44,7 +44,6 @@ import readDirStructure from '@wrote/read-dir-structure'
 
 (async () => {
   const res = await readDirStructure('example/directory')
-  const res2 = await readDirStructure('example')
   console.log(JSON.stringify(res, null, 2))
 })()
 ```
@@ -66,18 +65,16 @@ Output for the [`example/directory`](example/directory):
     "test.json": {
       "type": "File"
     },
-    "d": {
-      "subdirectory": {
-        "content": {
-          "subdirFileA.txt": {
-            "type": "File"
-          },
-          "subdirFileB.txt": {
-            "type": "File"
-          }
+    "subdirectory": {
+      "content": {
+        "subdirFileA.txt": {
+          "type": "File"
         },
-        "type": "Directory"
-      }
+        "subdirFileB.txt": {
+          "type": "File"
+        }
+      },
+      "type": "Directory"
     }
   },
   "type": "Directory"
