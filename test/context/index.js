@@ -22,7 +22,7 @@ export default class Context {
     return dir
   }
   get NESTED_FIXTURES_TEST_DIR() {
-
+    return resolve(fixture, 'dir-rec')
   }
   get SNAPSHOT_DIR() {
     return resolve(__dirname, '../snapshot')

@@ -1,0 +1,13 @@
+{
+  "content": {
+    "run-dmc": {
+      "content": {
+        "walk-this-way.txt": {
+          "type": "File"
+        }
+      },
+      "type": "Directory"
+    }
+  },
+  "type": "Directory"
+}
