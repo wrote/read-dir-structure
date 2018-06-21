@@ -48,12 +48,30 @@ const getType = (lstatRes) => {
 }
 
 /**
- * Read a directory, and return its structure as an object. Only Files, Directories and Symlinks are included!
- * @param {string} dirPath Path to the directory
- * @returns {Promise.<DirectoryStructure>} An object reflecting directory structure
+ * Read a directory, and return its structure as an object. Only `Files`, `Directories` and `Symlinks` are included!
+ * @param {string} dirPath Path to the directory.
+ * @returns {Promise.<DirectoryStructure>} An object reflecting the directory structure.
  * @example
  *
- * { type: "Directory", content: { "data.txt": { type: "File" } }
+ * const res = await readDirStructure('dir')
+ *
+ * {
+ *  type: 'Directory',
+ *  content: {
+ *    'data.txt': {
+ *      type: 'File'
+ *    },
+
+ *    subdir: {
+ *      type: 'Directory',
+ *      content: {
+ *        'data-ln.txt': {
+ *          type: 'SymbolicLink'
+ *        },
+ *      }
+ *    }
+ *  }
+ * }
  */
 export default async function readDirStructure(dirPath) {
   if (!dirPath) {
@@ -112,5 +130,10 @@ export default async function readDirStructure(dirPath) {
  * A directory structure representation
  * @typedef {Object} DirectoryStructure
  * @property {string} type File type, e.g., Directory, File, Symlink
- * @property {Object.<string, DirectoryStructure>} [content] Content if directory.
+ * @property {Object.<string, DirectoryStructureA>} [content] Content if directory.
+ *
+ *
+ * @typedef {Object} DirectoryStructureA
+ * @property {string} type File type, e.g., Directory, File, Symlink
+ * @property {'etc'} [content] Content if directory.
  */
