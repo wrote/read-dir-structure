@@ -98,17 +98,16 @@ export default async function readDirStructure(dirPath) {
       },
     }
   }, {})
-  const dirPromises = directories.map(async ({ path, relativePath }) => {
+
+  const dirs = await directories.reduce(async (acc, { path, relativePath }) => {
+    const res = await acc
     const structure = await readDirStructure(path)
-    return [relativePath, structure]
-  })
-  const dirsArray = await Promise.all(dirPromises)
-  const dirs = dirsArray.reduce(
-    (acc, [relativePath, structure]) => {
-      const d = { [relativePath]: structure }
-      return { ...acc, d }
-    }, {}
-  )
+    return {
+      ...res,
+      [relativePath]: structure,
+    }
+  }, {})
+
   const content = {
     ...files,
     ...dirs,
