@@ -16,7 +16,11 @@
       "console": "integratedTerminal",
       "args": [
         "test/spec",
-        "--babel"
+        "-b",
+        "-w"
+      ],
+      "skipFiles": [
+        "<node_internals>/**/*.js"
       ]
     }
   ]
