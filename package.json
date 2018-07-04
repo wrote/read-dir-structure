@@ -1,6 +1,6 @@
 {
   "name": "@wrote/read-dir-structure",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reads directory structure.",
   "main": "build",
   "scripts": {
