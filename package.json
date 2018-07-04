@@ -13,36 +13,33 @@
     "doc": "NODE_DEBUG=doc doc README-source.md -o README.md",
     "e": "node example",
     "example/": "yarn e example/example.js",
-    "build-src": "babel src --out-dir build --source-maps",
-    "build": "yarn-s doc build-src"
+    "b": "b --source-maps",
+    "build": "yarn-s doc b"
   },
   "files": [
     "build"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/artdecocode/read-dir-structure.git"
+    "url": "git://github.com/wrote/read-dir-structure.git"
   },
   "keywords": [
     "@wrote/read-dir-structure",
     "directory",
-    "read"
+    "read",
+    "folders",
+    "structure",
+    "filesystem",
+    "fs"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/artdecocode/read-dir-structure/issues"
+    "url": "https://github.com/wrote/read-dir-structure/issues"
   },
-  "homepage": "https://github.com/artdecocode/read-dir-structure#readme",
+  "homepage": "https://github.com/wrote/read-dir-structure#readme",
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.51",
-    "@babel/core": "7.0.0-beta.51",
-    "@babel/plugin-syntax-object-rest-spread": "7.0.0-beta.51",
-    "@babel/plugin-transform-modules-commonjs": "7.0.0-beta.51",
-    "@babel/register": "7.0.0-beta.51",
-    "babel-plugin-transform-rename-import": "2.2.0",
-    "documentary": "1.4.0",
-    "eslint": "4.19.1",
+    "documentary": "1.8.2",
     "eslint-config-artdeco": "1.0.0",
     "snapshot-context": "2.0.1",
     "yarn-s": "1.1.0",
