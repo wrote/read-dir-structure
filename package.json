@@ -24,13 +24,20 @@
     "url": "git://github.com/wrote/read-dir-structure.git"
   },
   "keywords": [
-    "@wrote/read-dir-structure",
+    "@wrote",
     "directory",
+    "dir",
+    "folder",
     "read",
-    "folders",
     "structure",
+    "tree",
+    "path",
     "filesystem",
-    "fs"
+    "fs",
+    "file",
+    "ls",
+    "stat",
+    "lstat"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
