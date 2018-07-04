@@ -1,6 +1,6 @@
 # @wrote/read-dir-structure
 
-[![npm version](https://badge.fury.io/js/@wrote/read-dir-structure.svg)](https://badge.fury.io/js/@wrote/read-dir-structure)
+%NPM: @wrote/read-dir-structure%
 
 `@wrote/read-dir-structure` is Node.js package to a read directory structure.
 
@@ -45,36 +45,7 @@ Reads the structure of the directory.
 
 Output for the [`example/directory`](example/directory):
 
-```json
-{
-  "content": {
-    "fileA-ln.txt": {
-      "type": "SymbolicLink"
-    },
-    "fileA.txt": {
-      "type": "File"
-    },
-    "fileB.txt": {
-      "type": "File"
-    },
-    "test.json": {
-      "type": "File"
-    },
-    "subdirectory": {
-      "content": {
-        "subdirFileA.txt": {
-          "type": "File"
-        },
-        "subdirFileB.txt": {
-          "type": "File"
-        }
-      },
-      "type": "Directory"
-    }
-  },
-  "type": "Directory"
-}
-```
+%FORK-json example example/example.js%
 
 ### Reasons for Errors
 
@@ -92,6 +63,6 @@ The following errors can happen and have been [context tested](test/spec/errors.
 
 ---
 
-(c) [Art Deco Code][1] 2018
+(c) [Art Deco][1] 2018
 
 [1]: https://artdeco.bz

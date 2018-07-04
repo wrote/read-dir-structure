@@ -1,6 +1,6 @@
 # @wrote/read-dir-structure
 
-[![npm version](https://badge.fury.io/js/@wrote/read-dir-structure.svg)](https://badge.fury.io/js/@wrote/read-dir-structure)
+[![npm version](https://badge.fury.io/js/%40wrote%2Fread-dir-structure.svg)](https://npmjs.org/package/@wrote/read-dir-structure)
 
 `@wrote/read-dir-structure` is Node.js package to a read directory structure.
 
@@ -94,6 +94,6 @@ The following errors can happen and have been [context tested](test/spec/errors.
 
 ---
 
-(c) [Art Deco Code][1] 2018
+(c) [Art Deco][1] 2018
 
 [1]: https://artdeco.bz
