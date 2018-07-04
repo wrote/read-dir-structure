@@ -1,3 +1,10 @@
+## 4 July 2018
+
+### 1.0.1
+
+- [package] Move to `wrote` org on github, add tags.
+- [doc] Embed output of the example.
+
 ## 21 June 2018
 
 ### 1.0.0
