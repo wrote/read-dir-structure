@@ -3,6 +3,7 @@
 ### 1.0.2
 
 - [package] Add the "module" field.
+- [package] Remove source maps, migrate to [ÀLaMode](https://alamode.cc).
 
 ## 4 July 2018
 
