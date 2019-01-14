@@ -1,3 +1,9 @@
+## 15 January 2019
+
+### 1.0.2
+
+- [package] Add the "module" field.
+
 ## 4 July 2018
 
 ### 1.0.1

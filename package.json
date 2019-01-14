@@ -1,8 +1,9 @@
 {
   "name": "@wrote/read-dir-structure",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Reads directory structure.",
   "main": "build",
+  "module": "src/index.js",
   "scripts": {
     "t": "zoroaster -a",
     "test": "zoroaster -a test/spec",
@@ -17,7 +18,8 @@
     "build": "yarn-s doc b"
   },
   "files": [
-    "build"
+    "build",
+    "src"
   ],
   "repository": {
     "type": "git",
