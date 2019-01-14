@@ -1,17 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = readDirStructure;
-
-var _fs = require("fs");
-
-var _makepromise = _interopRequireDefault(require("makepromise"));
-
-var _path = require("path");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+const { lstat, readdir } = require('fs');
+let makePromise = require('makepromise'); if (makePromise && makePromise.__esModule) makePromise = makePromise.default;
+const { resolve } = require('path');
 
 /**
  * Update information about directory's content with lstat.
@@ -20,48 +9,44 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {File[]} An array with file objects.
  */
 async function lstatFiles(dirPath, dirContent) {
-  const readFiles = dirContent.map(async relativePath => {
-    const path = (0, _path.resolve)(dirPath, relativePath);
-    const ls = await (0, _makepromise.default)(_fs.lstat, path);
+  const readFiles = dirContent.map(async (relativePath) => {
+    const path = resolve(dirPath, relativePath)
+    const ls = await makePromise(lstat, path)
     return {
       lstat: ls,
       path,
-      relativePath
-    };
-  });
-  const res = await Promise.all(readFiles);
-  return res;
+      relativePath,
+    }
+  })
+  const res = await Promise.all(readFiles)
+  return res
 }
+
 /**
  * Check if lstat result is a directory
  * @param {LstatRes} lstatRes Result of lib.lstatFiles
  * @returns {boolean} true if is a directory
  */
-
-
-const isDirectory = lstatRes => lstatRes.lstat.isDirectory();
+const isDirectory = lstatRes => lstatRes.lstat.isDirectory()
 /**
  * Check if lstat result is not a directory
  * @param {LstatRes} lstatRes Result of lib.lstatFiles
  * @returns {boolean} true if is not a directory
  */
+const isNotDirectory = lstatRes => !lstatRes.lstat.isDirectory()
 
-
-const isNotDirectory = lstatRes => !lstatRes.lstat.isDirectory();
-
-const getType = lstatRes => {
+const getType = (lstatRes) => {
   if (lstatRes.lstat.isDirectory()) {
-    return 'Directory';
+    return 'Directory'
   }
-
   if (lstatRes.lstat.isFile()) {
-    return 'File';
+    return 'File'
   }
-
   if (lstatRes.lstat.isSymbolicLink()) {
-    return 'SymbolicLink';
+    return 'SymbolicLink'
   }
-};
+}
+
 /**
  * Read a directory, and return its structure as an object. Only `Files`, `Directories` and `Symlinks` are included!
  * @param {string} dirPath Path to the directory.
@@ -88,52 +73,51 @@ const getType = lstatRes => {
  *  }
  * }
  */
-
-
-async function readDirStructure(dirPath) {
+               async function readDirStructure(dirPath) {
   if (!dirPath) {
-    throw new Error('Please specify a path to the directory');
+    throw new Error('Please specify a path to the directory')
   }
-
-  const ls = await (0, _makepromise.default)(_fs.lstat, dirPath);
-
+  const ls = await makePromise(lstat, dirPath)
   if (!ls.isDirectory()) {
-    const err = new Error('Path is not a directory');
-    err.code = 'ENOTDIR';
-    throw err;
+    const err = new Error('Path is not a directory')
+    err.code = 'ENOTDIR'
+    throw err
   }
+  const dir = await makePromise(readdir, dirPath)
+  const lsr = await lstatFiles(dirPath, dir)
 
-  const dir = await (0, _makepromise.default)(_fs.readdir, dirPath);
-  const lsr = await lstatFiles(dirPath, dir);
-  const directories = lsr.filter(isDirectory); // reduce at once
+  const directories = lsr.filter(isDirectory) // reduce at once
+  const notDirectories = lsr.filter(isNotDirectory)
 
-  const notDirectories = lsr.filter(isNotDirectory);
   const files = notDirectories.reduce((acc, current) => {
-    const type = getType(current);
-    return { ...acc,
+    const type = getType(current)
+    return {
+      ...acc,
       [current.relativePath]: {
-        type
-      }
-    };
-  }, {});
-  const dirs = await directories.reduce(async (acc, {
-    path,
-    relativePath
-  }) => {
-    const res = await acc;
-    const structure = await readDirStructure(path);
-    return { ...res,
-      [relativePath]: structure
-    };
-  }, {});
-  const content = { ...files,
-    ...dirs
-  };
+        type,
+      },
+    }
+  }, {})
+
+  const dirs = await directories.reduce(async (acc, { path, relativePath }) => {
+    const res = await acc
+    const structure = await readDirStructure(path)
+    return {
+      ...res,
+      [relativePath]: structure,
+    }
+  }, {})
+
+  const content = {
+    ...files,
+    ...dirs,
+  }
   return {
     content,
-    type: 'Directory'
-  };
+    type: 'Directory',
+  }
 }
+
 /**
  * A directory structure representation
  * { dir: subdir: { 'fileA.txt': 'foo', 'fileB.js': 'bar' }, 'fileC.jpg': 'baz' }
@@ -151,4 +135,6 @@ async function readDirStructure(dirPath) {
  * @property {string} type File type, e.g., Directory, File, Symlink
  * @property {'etc'} [content] Content if directory.
  */
-//# sourceMappingURL=index.js.map
+
+
+module.exports = readDirStructure

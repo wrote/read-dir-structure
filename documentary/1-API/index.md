@@ -1,17 +1,3 @@
-# @wrote/read-dir-structure
-
-%NPM: @wrote/read-dir-structure%
-
-`@wrote/read-dir-structure` is Node.js package to a read directory structure.
-
-```sh
-yarn add -E @wrote/read-dir-structure
-```
-
-## Table Of Contents
-
-%TOC%
-
 ## API
 
 There is a single default export function, import it with the following statement:
@@ -31,7 +17,6 @@ The return type of the function is a directory `Structure`. It is an associative
   ["content", "`Structure`", "If the type is `Directory`, the object will also have a `content` which also is a `Structure`. Therefore, the whole nested structure will be read. See below for an example."]
 ]
 ```
-
 
 ```### async readDirStructure => Structure
 [
@@ -60,9 +45,3 @@ The following errors can happen and have been [context tested](test/spec/errors.
   ["directory does not exist", "`ENOENT`", "ENOENT: no such file or directory, lstat '%DIRECTORY%'"]
 ]
 ```
-
----
-
-(c) [Art Deco][1] 2018
-
-[1]: https://artdeco.bz

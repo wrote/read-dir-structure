@@ -118,7 +118,6 @@ export default async function readDirStructure(dirPath) {
   }
 }
 
-
 /**
  * A directory structure representation
  * { dir: subdir: { 'fileA.txt': 'foo', 'fileB.js': 'bar' }, 'fileC.jpg': 'baz' }
