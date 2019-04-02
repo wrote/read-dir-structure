@@ -1,3 +1,9 @@
+## 2 April 2019
+
+### [1.0.3](https://github.com/wrote/read-dir-structure/compare/v1.0.2...v1.0.3)
+
+- [deps] Update `makepromise`.
+
 ## 15 January 2019
 
 ### 1.0.2
