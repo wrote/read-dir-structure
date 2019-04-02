@@ -2,7 +2,7 @@
   "name": "@wrote/read-dir-structure",
   "version": "1.0.2",
   "description": "Reads directory structure.",
-  "main": "build",
+  "main": "build/index.js",
   "module": "src/index.js",
   "scripts": {
     "t": "zoroaster -a",
@@ -12,8 +12,8 @@
     "test-watch": "yarn test -w",
     "lint": "eslint .",
     "doc": "NODE_DEBUG=doc doc documentary -o README.md",
-    "e": "node example",
-    "example/": "yarn e example/example.js",
+    "e": "alanode",
+    "example/": "yarn e example/example",
     "b": "alamode src -o build -s",
     "build": "yarn-s doc b"
   },
@@ -48,14 +48,14 @@
   },
   "homepage": "https://github.com/wrote/read-dir-structure#readme",
   "devDependencies": {
-    "alamode": "1.6.1",
-    "documentary": "1.20.1",
+    "alamode": "1.9.0",
+    "documentary": "1.23.2",
     "eslint-config-artdeco": "1.0.1",
-    "snapshot-context": "2.0.4",
+    "snapshot-context": "2.2.1",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.6.6"
+    "zoroaster": "3.11.2"
   },
   "dependencies": {
-    "makepromise": "3.0.2"
+    "makepromise": "3.0.3"
   }
 }

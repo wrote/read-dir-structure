@@ -26,11 +26,11 @@ The return type of the function is a directory `Structure`. It is an associative
 
 Reads the structure of the directory.
 
-%EXAMPLE: example/example.js, ../src => @wrote/read-dir-structure, javascript%
+%EXAMPLE: example/example, ../src => @wrote/read-dir-structure, javascript%
 
 Output for the [`example/directory`](example/directory):
 
-%FORK-json example example/example.js%
+%FORK-json example/example%
 
 ### Reasons for Errors
 
