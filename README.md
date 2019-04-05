@@ -14,7 +14,8 @@ yarn add -E @wrote/read-dir-structure
 - [API](#api)
   * [`Structure` Type](#structure-type)
   * [`async readDirStructure(path: string): Structure`](#async-readdirstructurepath-string-structure)
-  * [Reasons for Errors](#reasons-for-errors)
+  * [`async getFiles(content: Structure.content, path: string): Array<string>`](#async-getfilescontent-structurecontentpath-string-arraystring)
+- [Reasons for Errors](#reasons-for-errors)
 - [Copyright](#copyright)
 
 ## API
@@ -34,11 +35,13 @@ The return type of the function is a directory `Structure`. It is an associative
 | type     | `string` | The result of the _lstat_ and one of the following: `Directory`, `File`, `SymbolicLink`.  |
 | content  | `Structure` | If the type is `Directory`, the object will also have a `content` which also is a `Structure`. Therefore, the whole nested structure will be read. See below for an example. |
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true" width="25"></a></p>
+
 ### `async readDirStructure(`<br/>&nbsp;&nbsp;`path: string,`<br/>`): Structure`
 
 Reads the structure of the directory.
 
-```javascript
+```js
 /* yarn example/ */
 import readDirStructure from '@wrote/read-dir-structure'
 
@@ -81,7 +84,37 @@ Output for the [`example/directory`](example/directory):
 }
 ```
 
-### Reasons for Errors
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true" width="25"></a></p>
+
+### `async getFiles(`<br/>&nbsp;&nbsp;`content: Structure.content,`<br/>&nbsp;&nbsp;`path: string,`<br/>`): Array<string>`
+
+After running the `readDirStructure`, this function can be used to flatten the `content` output and return the list of all files (not including symlinks).
+
+```js
+/* yarn example/ */
+import readDirStructure, { getFiles } from '@wrote/read-dir-structure'
+
+(async () => {
+  const path = 'example/directory'
+  const res = await readDirStructure(path)
+  const files = getFiles(res.content, path)
+  console.log(JSON.stringify(files, null, 2))
+})()
+```
+
+```json
+[
+  "example/directory/fileA.txt",
+  "example/directory/fileB.txt",
+  "example/directory/test.json",
+  "example/directory/subdirectory/subdirFileA.txt",
+  "example/directory/subdirectory/subdirFileB.txt"
+]
+```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
+
+## Reasons for Errors
 
 The following errors can happen and have been [context tested](test/spec/errors.js) against:
 
@@ -91,6 +124,8 @@ The following errors can happen and have been [context tested](test/spec/errors.
 | passing a path to a symbolic link | `ENOTDIR` | Path is not a directory                                |
 | passing a path to a file          | `ENOTDIR` | Path is not a directory                                |
 | directory does not exist          | `ENOENT` | ENOENT: no such file or directory, lstat '%DIRECTORY%' |
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
 
 ## Copyright
 

@@ -18,6 +18,8 @@ The return type of the function is a directory `Structure`. It is an associative
 ]
 ```
 
+%~ width="25"%
+
 ```### async readDirStructure => Structure
 [
   ["path", "string"]
@@ -26,22 +28,25 @@ The return type of the function is a directory `Structure`. It is an associative
 
 Reads the structure of the directory.
 
-%EXAMPLE: example/example, ../src => @wrote/read-dir-structure, javascript%
+%EXAMPLE: example, ../src => @wrote/read-dir-structure%
 
 Output for the [`example/directory`](example/directory):
 
-%FORK-json example/example%
+%FORK-json example%
 
-### Reasons for Errors
+%~ width="25"%
 
-The following errors can happen and have been [context tested](test/spec/errors.js) against:
-
-```table
+```### async getFiles => Array<string>
 [
-  ["Happens when...", "code", "Message"],
-  ["not passing any path", "`-`", "Please specify a path to the directory"],
-  ["passing a path to a symbolic link", "`ENOTDIR`", "Path is not a directory"],
-  ["passing a path to a file", "`ENOTDIR`", "Path is not a directory"],
-  ["directory does not exist", "`ENOENT`", "ENOENT: no such file or directory, lstat '%DIRECTORY%'"]
+  ["content", "Structure.content"],
+  ["path", "string"]
 ]
 ```
+
+After running the `readDirStructure`, this function can be used to flatten the `content` output and return the list of all files (not including symlinks).
+
+%EXAMPLE: example/get-files, ../src => @wrote/read-dir-structure%
+
+%FORK-json example/get-files%
+
+%~%
