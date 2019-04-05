@@ -1,6 +1,6 @@
 import { equal } from 'zoroaster/assert'
 import Context from '../context'
-import readDirStructure from '../../src'
+import readDirStructure, { getFiles } from '../../src'
 
 /** @type {Object.<string, (c: Context)>} */
 const T = {
@@ -15,6 +15,11 @@ const T = {
   async 'reads a nested directory structure'({ NESTED_FIXTURES_TEST_DIR }) {
     const res = await readDirStructure(NESTED_FIXTURES_TEST_DIR)
     return res
+  },
+  async 'flattens the file list'({ NESTED_FIXTURES_TEST_DIR }) {
+    const res = await readDirStructure(NESTED_FIXTURES_TEST_DIR)
+    const files = getFiles(res.content, NESTED_FIXTURES_TEST_DIR)
+    return files
   },
 }
 

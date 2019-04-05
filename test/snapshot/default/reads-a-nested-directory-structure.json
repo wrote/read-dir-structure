@@ -1,5 +1,8 @@
 {
   "content": {
+    "hello.txt": {
+      "type": "File"
+    },
     "run-dmc": {
       "content": {
         "walk-this-way.txt": {

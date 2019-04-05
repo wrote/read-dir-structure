@@ -1,6 +1,6 @@
 import { lstat, readdir } from 'fs'
 import makePromise from 'makepromise'
-import { resolve } from 'path'
+import { join } from 'path'
 
 /**
  * Update information about directory's content with lstat.
@@ -10,7 +10,7 @@ import { resolve } from 'path'
  */
 async function lstatFiles(dirPath, dirContent) {
   const readFiles = dirContent.map(async (relativePath) => {
-    const path = resolve(dirPath, relativePath)
+    const path = join(dirPath, relativePath)
     const ls = await makePromise(lstat, path)
     return {
       lstat: ls,
@@ -116,6 +116,27 @@ export default async function readDirStructure(dirPath) {
     content,
     type: 'Directory',
   }
+}
+
+/**
+ * After running the `readDirStructure`, this function can be used to flatten the `content` output and return the list of all files (not including symlinks).
+ * @param {Object<string, DirectoryStructure>} content The computed content.
+ * @param {string} path The path to the directory.
+ */
+export const getFiles = (content, path) => {
+  let files = []
+  let dirs = []
+  Object.keys(content).forEach((key) => {
+    const { type } = content[key]
+    if (type == 'File') files.push(join(path, key))
+    else if (type == 'Directory') dirs.push(key)
+  })
+  const dirFiles = dirs.reduce((acc, dir) => {
+    const { content: c } = content[dir]
+    const f = getFiles(c, join(path, dir))
+    return [...acc, ...f]
+  }, [])
+  return [...files, ...dirFiles]
 }
 
 /**

@@ -1,7 +1,7 @@
-import { resolve } from 'path'
+import { join } from 'path'
 
-const fixture = resolve(__dirname, '../fixture')
-const dir = resolve(fixture, 'dir')
+const fixture = 'test/fixture'
+const dir = join(fixture, 'dir')
 /**
  * A testing context for the package.
  */
@@ -22,15 +22,12 @@ export default class Context {
     return dir
   }
   get NESTED_FIXTURES_TEST_DIR() {
-    return resolve(fixture, 'dir-rec')
-  }
-  get SNAPSHOT_DIR() {
-    return resolve(__dirname, '../snapshot')
+    return join(fixture, 'dir-rec')
   }
   get FIXTURES_TEST_DIR_SOFT_LINK() {
-    return resolve(dir, 'dir-ln')
+    return join(dir, 'dir-ln')
   }
   get FILE() {
-    return resolve(fixture, 'file.txt')
+    return join(fixture, 'file.txt')
   }
 }
