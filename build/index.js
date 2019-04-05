@@ -1,6 +1,6 @@
 const { lstat, readdir } = require('fs');
 let makePromise = require('makepromise'); if (makePromise && makePromise.__esModule) makePromise = makePromise.default;
-const { resolve } = require('path');
+const { join } = require('path');
 
 /**
  * Update information about directory's content with lstat.
@@ -10,7 +10,7 @@ const { resolve } = require('path');
  */
 async function lstatFiles(dirPath, dirContent) {
   const readFiles = dirContent.map(async (relativePath) => {
-    const path = resolve(dirPath, relativePath)
+    const path = join(dirPath, relativePath)
     const ls = await makePromise(lstat, path)
     return {
       lstat: ls,
@@ -119,6 +119,27 @@ const getType = (lstatRes) => {
 }
 
 /**
+ * After running the `readDirStructure`, this function can be used to flatten the `content` output and return the list of all files (not including symlinks).
+ * @param {Object<string, DirectoryStructure>} content The computed content.
+ * @param {string} path The path to the directory.
+ */
+       const getFiles = (content, path) => {
+  let files = []
+  let dirs = []
+  Object.keys(content).forEach((key) => {
+    const { type } = content[key]
+    if (type == 'File') files.push(join(path, key))
+    else if (type == 'Directory') dirs.push(key)
+  })
+  const dirFiles = dirs.reduce((acc, dir) => {
+    const { content: c } = content[dir]
+    const f = getFiles(c, join(path, dir))
+    return [...acc, ...f]
+  }, [])
+  return [...files, ...dirFiles]
+}
+
+/**
  * A directory structure representation
  * { dir: subdir: { 'fileA.txt': 'foo', 'fileB.js': 'bar' }, 'fileC.jpg': 'baz' }
  * @typedef {Object} LstatRes
@@ -138,3 +159,4 @@ const getType = (lstatRes) => {
 
 
 module.exports = readDirStructure
+module.exports.getFiles = getFiles

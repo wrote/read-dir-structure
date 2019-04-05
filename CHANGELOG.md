@@ -1,3 +1,9 @@
+## 5 April 2019
+
+### [1.1.0](https://github.com/wrote/read-dir-structure/compare/v1.0.3...v1.1.0)
+
+- [feature] Implement `getFiles` method.
+
 ## 2 April 2019
 
 ### [1.0.3](https://github.com/wrote/read-dir-structure/compare/v1.0.2...v1.0.3)
