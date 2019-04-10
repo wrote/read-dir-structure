@@ -1,6 +1,6 @@
 {
   "name": "@wrote/read-dir-structure",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Reads directory structure.",
   "main": "build/index.js",
   "module": "src/index.js",
