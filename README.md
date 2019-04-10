@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/%40wrote%2Fread-dir-structure.svg)](https://npmjs.org/package/@wrote/read-dir-structure)
 
-`@wrote/read-dir-structure` is Node.js package to a read directory structure.
+`@wrote/read-dir-structure` is Node.JS package to a read directory structure.
 
 ```sh
 yarn add -E @wrote/read-dir-structure
@@ -26,13 +26,14 @@ There is a single default export function, import it with the following statemen
 import readDirStructure from '@wrote/read-dir-structure'
 ```
 
-The types and [externs](externs.js) for _Google Closure Compiler_ via [**_Depack_**](https://github.com/dpck/depack) are defined in the `_catchment` namespace.
+The types and [externs](externs.js) for _Google Closure Compiler_ via [**_Depack_**](https://github.com/dpck/depack) are defined in the `_readDirStructure` namespace.
 
 ## Types
 
 The return type of the function is a _DirectoryStructure_. It is a recursive object, where items have either `File`, `Directory` or `SymLink` types specified in the `type` field, and if the item is a directory, it has the `content` property which is another _Structure_.
 
 `Object<string, !_readDirStructure.DirectoryStructure>` __<a name="type-_readdirstructurecontent">`_readDirStructure.Content`</a>__: The recursive content of the directory.
+
 __<a name="type-_readdirstructuredirectorystructure">`_readDirStructure.DirectoryStructure`</a>__: A directory structure representation.
 
 |  Name   |                              Type                              |                    Description                    |
