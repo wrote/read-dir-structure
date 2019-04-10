@@ -126,7 +126,7 @@ export default async function readDirStructure(dirPath) {
 
 /**
  * After running the `readDirStructure`, this function can be used to flatten the `content` output and return the list of all files (not including symlinks).
- * @param {!_readDirStructure.content} content The recursive content of the directory.
+ * @param {!_readDirStructure.Content} content The recursive content of the directory.
  * @param {string} path The path to the directory.
  */
 export const getFiles = (content, path) => {
@@ -139,7 +139,7 @@ export const getFiles = (content, path) => {
   })
   const dirFiles = dirs.reduce((acc, dir) => {
     const { content: c } =
-      /** @type {!_readDirStructure.content} */ (content[dir])
+      /** @type {!_readDirStructure.Content} */ (content[dir])
     const f = getFiles(c, join(path, dir))
     return [...acc, ...f]
   }, [])
@@ -160,11 +160,11 @@ export const getFiles = (content, path) => {
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {_readDirStructure.content} content The recursive content of the directory.
+ * @typedef {_readDirStructure.Content} Content The recursive content of the directory.
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {Object<string, !_readDirStructure.DirectoryStructure>} _readDirStructure.content The recursive content of the directory.
+ * @typedef {Object<string, !_readDirStructure.DirectoryStructure>} _readDirStructure.Content The recursive content of the directory.
  */
 /**
  * @suppress {nonStandardJsDocs}
@@ -174,7 +174,7 @@ export const getFiles = (content, path) => {
  * @suppress {nonStandardJsDocs}
  * @typedef {Object} _readDirStructure.DirectoryStructure A directory structure representation.
  * @prop {string} [type] The type of the item.
- * @prop {!_readDirStructure.content} [content] The recursive content if the item is a directory.
+ * @prop {!_readDirStructure.Content} [content] The recursive content if the item is a directory.
  */
 /**
  * @suppress {nonStandardJsDocs}

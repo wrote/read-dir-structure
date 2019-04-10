@@ -8,8 +8,8 @@ _readDirStructure.File
 /**
  * @typedef {Object<string, !_readDirStructure.DirectoryStructure>}
  */
-_readDirStructure.content
+_readDirStructure.Content
 /**
- * @typedef {{ type: (string|undefined), content: (!_readDirStructure.content|undefined) }}
+ * @typedef {{ type: (string|undefined), content: (!_readDirStructure.Content|undefined) }}
  */
 _readDirStructure.DirectoryStructure

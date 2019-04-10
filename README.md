@@ -12,9 +12,9 @@ yarn add -E @wrote/read-dir-structure
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
-  * [`Structure` Type](#structure-type)
-  * [`async readDirStructure(path: string): Structure`](#async-readdirstructurepath-string-structure)
-  * [`async getFiles(content: Structure.content, path: string): Array<string>`](#async-getfilescontent-structurecontentpath-string-arraystring)
+- [Types](#types)
+- [`async readDirStructure(path: string): DirectoryStructure`](#async-readdirstructurepath-string-directorystructure)
+- [`async getFiles(content: Content, path: string): Array<string>`](#async-getfilescontent-contentpath-string-arraystring)
 - [Reasons for Errors](#reasons-for-errors)
 - [Copyright](#copyright)
 
@@ -26,18 +26,23 @@ There is a single default export function, import it with the following statemen
 import readDirStructure from '@wrote/read-dir-structure'
 ```
 
-### `Structure` Type
+The types and [externs](externs.js) for _Google Closure Compiler_ via [**_Depack_**](https://github.com/dpck/depack) are defined in the `_catchment` namespace.
 
-The return type of the function is a directory `Structure`. It is an associative array which contains the next properties:
+## Types
 
-| Property |    Type     |                                                                                 Description                                                                                  |
-| -------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| type     | `string` | The result of the _lstat_ and one of the following: `Directory`, `File`, `SymbolicLink`.  |
-| content  | `Structure` | If the type is `Directory`, the object will also have a `content` which also is a `Structure`. Therefore, the whole nested structure will be read. See below for an example. |
+The return type of the function is a _DirectoryStructure_. It is a recursive object, where items have either `File`, `Directory` or `SymLink` types specified in the `type` field, and if the item is a directory, it has the `content` property which is another _Structure_.
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true" width="25"></a></p>
+`Object<string, !_readDirStructure.DirectoryStructure>` __<a name="type-_readdirstructurecontent">`_readDirStructure.Content`</a>__: The recursive content of the directory.
+__<a name="type-_readdirstructuredirectorystructure">`_readDirStructure.DirectoryStructure`</a>__: A directory structure representation.
 
-### `async readDirStructure(`<br/>&nbsp;&nbsp;`path: string,`<br/>`): Structure`
+|  Name   |                              Type                              |                    Description                    |
+| ------- | -------------------------------------------------------------- | ------------------------------------------------- |
+| type    | _string_                                                       | The type of the item.                             |
+| content | _[!_readDirStructure.Content](#type-_readdirstructurecontent)_ | The recursive content if the item is a directory. |
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
+
+## `async readDirStructure(`<br/>&nbsp;&nbsp;`path: string,`<br/>`): DirectoryStructure`
 
 Reads the structure of the directory.
 
@@ -84,9 +89,10 @@ Output for the [`example/directory`](example/directory):
 }
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true" width="25"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
 
-### `async getFiles(`<br/>&nbsp;&nbsp;`content: Structure.content,`<br/>&nbsp;&nbsp;`path: string,`<br/>`): Array<string>`
+
+## `async getFiles(`<br/>&nbsp;&nbsp;`content: Content,`<br/>&nbsp;&nbsp;`path: string,`<br/>`): Array<string>`
 
 After running the `readDirStructure`, this function can be used to flatten the `content` output and return the list of all files (not including symlinks).
 
@@ -101,7 +107,6 @@ import readDirStructure, { getFiles } from '@wrote/read-dir-structure'
   console.log(JSON.stringify(files, null, 2))
 })()
 ```
-
 ```json
 [
   "example/directory/fileA.txt",
