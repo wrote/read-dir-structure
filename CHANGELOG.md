@@ -1,6 +1,10 @@
 ## 10 April 2019
 
-### [1.1.1](https://github.com/wrote/read-dir-structure/compare/v1.1.0...v1.1.1)
+### [1.2.0](https://github.com/wrote/read-dir-structure/compare/v1.1.0...v1.2.0)
+
+- [externs] Provide externs for _Google Closure Compiler_ via _Depack_.
+- [doc] Document types recursively.
+- [doc] Update `makepromise`.
 
 ## 5 April 2019
 
