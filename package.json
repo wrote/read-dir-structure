@@ -12,6 +12,8 @@
     "test-watch": "yarn test -w",
     "lint": "eslint .",
     "doc": "NODE_DEBUG=doc doc documentary -o README.md",
+    "d": "typal src/index.js -c",
+    "externs": "typal externs.js -e",
     "e": "alanode",
     "example/": "yarn e example/example",
     "b": "alamode src -o build -s",
@@ -19,8 +21,10 @@
   },
   "files": [
     "build",
-    "src"
+    "src",
+    "externs.js"
   ],
+  "externs": "externs.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/wrote/read-dir-structure.git"
@@ -55,6 +59,6 @@
     "zoroaster": "^3.11.4"
   },
   "dependencies": {
-    "makepromise": "^3.0.3"
+    "makepromise": "^3.1.0"
   }
 }

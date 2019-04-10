@@ -1,3 +1,7 @@
+## 10 April 2019
+
+### [1.1.1](https://github.com/wrote/read-dir-structure/compare/v1.1.0...v1.1.1)
+
 ## 5 April 2019
 
 ### [1.1.0](https://github.com/wrote/read-dir-structure/compare/v1.0.3...v1.1.0)

@@ -1,4 +1,18 @@
-<types>
-  <type name="">
+<types namespace="_readDirStructure">
+  <import from="fs" name="Stats" />
+  <type name="File">
+    <prop name="lstat" type="!fs.Stats">The stats of the item.</prop>
+    <prop string name="path">The full path of the item.</prop>
+    <prop string name="relativePath">The name of the item.</prop>
+  </type>
+  <type type="Object<string, !_readDirStructure.DirectoryStructure>" name="content" desc="The recursive content of the directory.">
+  </type>
+  <type name="DirectoryStructure" desc="A directory structure representation.">
+    <prop opt name="type" type="string">
+      The type of the item.
+    </prop>
+    <prop opt name="content" type="!_readDirStructure.content">
+      The recursive content if the item is a directory.
+    </prop>
   </type>
 </types>
