@@ -5,8 +5,8 @@ const { join } = require('path');
 /**
  * Update information about directory's content with lstat.
  * @param {string} dirPath Path to the root directory
- * @param {string[]} dirContent
- * @returns {File[]} An array with file objects.
+ * @param {!Array<string>} dirContent
+ * @returns {Promise<Array<_readDirStructure.File>>} An array with file objects.
  */
 async function lstatFiles(dirPath, dirContent) {
   const readFiles = dirContent.map(async (relativePath) => {
@@ -24,13 +24,19 @@ async function lstatFiles(dirPath, dirContent) {
 
 /**
  * Check if lstat result is a directory
- * @param {LstatRes} lstatRes Result of lib.lstatFiles
+ * @param {_readDirStructure.File} lstatRes
+ * @param {!fs.Stats} lstatRes.lstat The stats of the item.
+ * @param {string} lstatRes.path The full path of the item.
+ * @param {string} lstatRes.relativePath The name of the item.
  * @returns {boolean} true if is a directory
  */
 const isDirectory = lstatRes => lstatRes.lstat.isDirectory()
 /**
  * Check if lstat result is not a directory
- * @param {LstatRes} lstatRes Result of lib.lstatFiles
+ * @param {_readDirStructure.File} lstatRes
+ * @param {!fs.Stats} lstatRes.lstat The stats of the item.
+ * @param {string} lstatRes.path The full path of the item.
+ * @param {string} lstatRes.relativePath The name of the item.
  * @returns {boolean} true if is not a directory
  */
 const isNotDirectory = lstatRes => !lstatRes.lstat.isDirectory()
@@ -50,28 +56,28 @@ const getType = (lstatRes) => {
 /**
  * Read a directory, and return its structure as an object. Only `Files`, `Directories` and `Symlinks` are included!
  * @param {string} dirPath Path to the directory.
- * @returns {Promise.<DirectoryStructure>} An object reflecting the directory structure.
+ * @returns {Promise<_readDirStructure.DirectoryStructure>} An object reflecting the directory structure.
  * @example
- *
- * const res = await readDirStructure('dir')
- *
- * {
- *  type: 'Directory',
- *  content: {
- *    'data.txt': {
- *      type: 'File'
- *    },
-
- *    subdir: {
- *      type: 'Directory',
- *      content: {
- *        'data-ln.txt': {
- *          type: 'SymbolicLink'
- *        },
- *      }
- *    }
- *  }
- * }
+```js
+const res = await readDirStructure('dir')
+// result:
+{
+  type: 'Directory',
+  content: {
+    'data.txt': {
+      type: 'File'
+    },
+    subdir: {
+      type: 'Directory',
+      content: {
+        'data-ln.txt': {
+          type: 'SymbolicLink'
+        },
+      }
+    }
+  }
+}
+```
  */
                async function readDirStructure(dirPath) {
   if (!dirPath) {
@@ -83,7 +89,7 @@ const getType = (lstatRes) => {
     err.code = 'ENOTDIR'
     throw err
   }
-  const dir = await makePromise(readdir, dirPath)
+  const dir = /** @type {!Array<string>} */ (await makePromise(readdir, dirPath))
   const lsr = await lstatFiles(dirPath, dir)
 
   const directories = lsr.filter(isDirectory) // reduce at once
@@ -120,7 +126,7 @@ const getType = (lstatRes) => {
 
 /**
  * After running the `readDirStructure`, this function can be used to flatten the `content` output and return the list of all files (not including symlinks).
- * @param {Object<string, DirectoryStructure>} content The computed content.
+ * @param {!_readDirStructure.Content} content The recursive content of the directory.
  * @param {string} path The path to the directory.
  */
        const getFiles = (content, path) => {
@@ -132,29 +138,47 @@ const getType = (lstatRes) => {
     else if (type == 'Directory') dirs.push(key)
   })
   const dirFiles = dirs.reduce((acc, dir) => {
-    const { content: c } = content[dir]
+    const { content: c } =
+      /** @type {!_readDirStructure.Content} */ (content[dir])
     const f = getFiles(c, join(path, dir))
     return [...acc, ...f]
   }, [])
   return [...files, ...dirFiles]
 }
 
+/* typal types/index.xml */
 /**
- * A directory structure representation
- * { dir: subdir: { 'fileA.txt': 'foo', 'fileB.js': 'bar' }, 'fileC.jpg': 'baz' }
- * @typedef {Object} LstatRes
- * @property {fs.Stats} lstat
- * @property {string} relativePath
- *
- * A directory structure representation
- * @typedef {Object} DirectoryStructure
- * @property {string} type File type, e.g., Directory, File, Symlink
- * @property {Object.<string, DirectoryStructureA>} [content] Content if directory.
- *
- *
- * @typedef {Object} DirectoryStructureA
- * @property {string} type File type, e.g., Directory, File, Symlink
- * @property {'etc'} [content] Content if directory.
+ * @suppress {nonStandardJsDocs}
+ * @typedef {_readDirStructure.File} File
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {Object} _readDirStructure.File
+ * @prop {!fs.Stats} lstat The stats of the item.
+ * @prop {string} path The full path of the item.
+ * @prop {string} relativePath The name of the item.
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {_readDirStructure.Content} Content The recursive content of the directory.
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {Object<string, !_readDirStructure.DirectoryStructure>} _readDirStructure.Content The recursive content of the directory.
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {_readDirStructure.DirectoryStructure} DirectoryStructure A directory structure representation.
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {Object} _readDirStructure.DirectoryStructure A directory structure representation.
+ * @prop {string} [type] The type of the item.
+ * @prop {!_readDirStructure.Content} [content] The recursive content if the item is a directory.
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('fs').Stats} fs.Stats
  */
 
 
