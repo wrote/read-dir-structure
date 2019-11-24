@@ -52,11 +52,11 @@
   },
   "homepage": "https://github.com/wrote/read-dir-structure#readme",
   "devDependencies": {
-    "alamode": "^1.9.2",
-    "documentary": "^1.23.4",
+    "alamode": "^3.2.0",
+    "documentary": "^1.34.1",
     "eslint-config-artdeco": "1.0.1",
     "yarn-s": "1.1.0",
-    "zoroaster": "^3.11.4"
+    "zoroaster": "^4.1.2"
   },
   "dependencies": {
     "makepromise": "^3.1.0"
