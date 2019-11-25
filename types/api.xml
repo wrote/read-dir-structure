@@ -7,9 +7,10 @@
     </arg>
     Read a directory, and return its structure as an object. Only `Files`, `Directories` and `Symlinks` are included!
   </method>
-  <method name="getFiles"
-    return="!Array<string>">
-    <arg type="!_wrote.Content" name="content">The content from the `readDirStructure` result.</arg>
+  <method name="getFiles" return="!Array<string>">
+    <arg type="!_wrote.Content" name="content">
+      The content from the `readDirStructure` result.
+    </arg>
     <arg string name="path">
       The original path to the directory.
     </arg>

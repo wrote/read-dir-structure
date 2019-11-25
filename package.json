@@ -8,12 +8,15 @@
     "t": "zoroaster -a",
     "test": "zoroaster -a test/spec",
     "test-build": "ALAMODE_ENV=test-build yarn test",
+    "test-compile": "ALAMODE_ENV=test-compile yarn test",
     "test-all": "yarn-s test test-build",
     "test-watch": "yarn test -w",
     "lint": "eslint .",
+    "compile": "depack src/depack -o compile/depack.js -a -c -s",
     "doc": "NODE_DEBUG=doc doc -o README.md -n _wrote",
-    "d": "yarn-s d1 externs",
-    "d1": "typal src/index.js -c",
+    "d": "yarn-s template d1 externs",
+    "d1": "typal compile/index.js -u",
+    "template": "typal compile/template.js -T compile/index.js -t types",
     "externs": "typal types/externs.js",
     "e": "alanode",
     "example/": "yarn e example/example",
@@ -23,7 +26,8 @@
   "files": [
     "build",
     "src",
-    "types"
+    "types",
+    "compile"
   ],
   "externs": "types/externs.js",
   "repository": {

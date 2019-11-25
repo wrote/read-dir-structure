@@ -7,6 +7,19 @@
           "to": "$1build"
         }
       }
+    },
+    "test-compile": {
+      "import": {
+        "replacement": {
+          "from": "^((../)+)src",
+          "to": "$1compile"
+        }
+      }
     }
+  },
+  "import": {
+    "alamodeModules": [
+      "makepromise"
+    ]
   }
 }

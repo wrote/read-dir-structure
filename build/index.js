@@ -1,12 +1,12 @@
 const { lstat, readdir } = require('fs');
-let makePromise = require('makepromise'); if (makePromise && makePromise.__esModule) makePromise = makePromise.default;
-const { join } = require('path');
+const makePromise = require('makepromise');
+const { join, relative } = require('path');
 
 /**
  * Update information about directory's content with lstat.
  * @param {string} dirPath Path to the root directory
  * @param {!Array<string>} dirContent
- * @returns {Promise<Array<_readDirStructure.File>>} An array with file objects.
+ * @returns {Promise<Array<_wrote.File>>} An array with file objects.
  */
 async function lstatFiles(dirPath, dirContent) {
   const readFiles = dirContent.map(async (relativePath) => {
@@ -24,7 +24,7 @@ async function lstatFiles(dirPath, dirContent) {
 
 /**
  * Check if lstat result is a directory
- * @param {_readDirStructure.File} lstatRes
+ * @param {_wrote.File} lstatRes
  * @param {!fs.Stats} lstatRes.lstat The stats of the item.
  * @param {string} lstatRes.path The full path of the item.
  * @param {string} lstatRes.relativePath The name of the item.
@@ -33,7 +33,7 @@ async function lstatFiles(dirPath, dirContent) {
 const isDirectory = lstatRes => lstatRes.lstat.isDirectory()
 /**
  * Check if lstat result is not a directory
- * @param {_readDirStructure.File} lstatRes
+ * @param {_wrote.File} lstatRes
  * @param {!fs.Stats} lstatRes.lstat The stats of the item.
  * @param {string} lstatRes.path The full path of the item.
  * @param {string} lstatRes.relativePath The name of the item.
@@ -56,33 +56,35 @@ const getType = (lstatRes) => {
 /**
  * Read a directory, and return its structure as an object. Only `Files`, `Directories` and `Symlinks` are included!
  * @param {string} dirPath Path to the directory.
- * @returns {Promise<_readDirStructure.DirectoryStructure>} An object reflecting the directory structure.
+ * @param {!_wrote.ReadDirStructureOpts} [opts] The options.
+ * @returns {!Promise<_wrote.DirectoryStructure>} An object reflecting the directory structure.
  * @example
-```js
-const res = await readDirStructure('dir')
-// result:
-{
-  type: 'Directory',
-  content: {
-    'data.txt': {
-      type: 'File'
-    },
-    subdir: {
-      type: 'Directory',
-      content: {
-        'data-ln.txt': {
-          type: 'SymbolicLink'
-        },
+  ```js
+  const res = await readDirStructure('dir')
+  // result:
+  {
+    type: 'Directory',
+    content: {
+      'data.txt': {
+        type: 'File'
+      },
+      subdir: {
+        type: 'Directory',
+        content: {
+          'data-ln.txt': {
+            type: 'SymbolicLink'
+          },
+        }
       }
     }
   }
-}
-```
+  ```
  */
-async function readDirStructure(dirPath) {
+async function readDirStructure(dirPath, opts = {}) {
   if (!dirPath) {
     throw new Error('Please specify a path to the directory')
   }
+  const { ignore = [] } = opts
   const ls = await makePromise(lstat, dirPath)
   if (!ls.isDirectory()) {
     const err = new Error('Path is not a directory')
@@ -106,6 +108,8 @@ async function readDirStructure(dirPath) {
   }, {})
 
   const dirs = await directories.reduce(async (acc, { path, relativePath }) => {
+    const rel = relative(dirPath, path)
+    if (ignore.includes(rel)) return acc
     const res = await acc
     const structure = await readDirStructure(path)
     return {
@@ -126,7 +130,7 @@ async function readDirStructure(dirPath) {
 
 /**
  * After running the `readDirStructure`, this function can be used to flatten the `content` output and return the list of all files (not including symlinks).
- * @param {!_readDirStructure.Content} content The recursive content of the directory.
+ * @param {!_wrote.Content} content The recursive content of the directory.
  * @param {string} path The path to the directory.
  */
 const getFiles = (content, path) => {
@@ -139,7 +143,7 @@ const getFiles = (content, path) => {
   })
   const dirFiles = dirs.reduce((acc, dir) => {
     const { content: c } =
-      /** @type {!_readDirStructure.Content} */ (content[dir])
+      /** @type {!_wrote.Content} */ (content[dir])
     const f = getFiles(c, join(path, dir))
     return [...acc, ...f]
   }, [])
@@ -149,32 +153,41 @@ const getFiles = (content, path) => {
 /* typal types/index.xml */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {_readDirStructure.File} File
+ * @typedef {_wrote.File} File
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {Object} _readDirStructure.File
+ * @typedef {Object} _wrote.File
  * @prop {!fs.Stats} lstat The stats of the item.
  * @prop {string} path The full path of the item.
  * @prop {string} relativePath The name of the item.
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {_readDirStructure.Content} Content The recursive content of the directory.
+ * @typedef {_wrote.ReadDirStructureOpts} ReadDirStructureOpts Options for reading the dir structure.
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {Object<string, !_readDirStructure.DirectoryStructure>} _readDirStructure.Content The recursive content of the directory.
+ * @typedef {Object} _wrote.ReadDirStructureOpts Options for reading the dir structure.
+ * @prop {!Array<string>} [ignore] The list of paths inside of the directory to ignore, e.g., `[.git]`.
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {_readDirStructure.DirectoryStructure} DirectoryStructure A directory structure representation.
+ * @typedef {_wrote.Content} Content The recursive content of the directory.
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {Object} _readDirStructure.DirectoryStructure A directory structure representation.
+ * @typedef {Object<string, !_wrote.DirectoryStructure>} _wrote.Content The recursive content of the directory.
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {_wrote.DirectoryStructure} DirectoryStructure A directory structure representation.
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {Object} _wrote.DirectoryStructure A directory structure representation.
  * @prop {string} [type] The type of the item.
- * @prop {!_readDirStructure.Content} [content] The recursive content if the item is a directory.
+ * @prop {!_wrote.Content} [content] The recursive content if the item is a directory.
  */
 /**
  * @suppress {nonStandardJsDocs}

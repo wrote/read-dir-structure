@@ -1,15 +1,27 @@
+/**
+ * @fileoverview
+ * @externs
+ */
+
 /* typal types/index.xml externs */
 /** @const */
-var _readDirStructure = {}
+var _wrote = {}
 /**
  * @typedef {{ lstat: !fs.Stats, path: string, relativePath: string }}
  */
-_readDirStructure.File
+_wrote.File
 /**
- * @typedef {Object<string, !_readDirStructure.DirectoryStructure>}
+ * Options for reading the dir structure.
+ * @typedef {{ ignore: ((!Array<string>)|undefined) }}
  */
-_readDirStructure.Content
+_wrote.ReadDirStructureOpts
 /**
- * @typedef {{ type: (string|undefined), content: (!_readDirStructure.Content|undefined) }}
+ * The recursive content of the directory.
+ * @typedef {Object<string, !_wrote.DirectoryStructure>}
  */
-_readDirStructure.DirectoryStructure
+_wrote.Content
+/**
+ * A directory structure representation.
+ * @typedef {{ type: (string|undefined), content: ((!_wrote.Content)|undefined) }}
+ */
+_wrote.DirectoryStructure
