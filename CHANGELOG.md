@@ -1,3 +1,10 @@
+## 25 November 2019
+
+### [1.3.0](https://github.com/wrote/read-dir-structure/compare/v1.2.0...v1.3.0)
+
+- [feature] Ignore specific directories when traversing the structure.
+- [api] Create the `api.xml` file, compile with _Closure Compiler_.
+
 ## 10 April 2019
 
 ### [1.2.0](https://github.com/wrote/read-dir-structure/compare/v1.1.0...v1.2.0)
