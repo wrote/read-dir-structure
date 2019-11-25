@@ -1,8 +1,4 @@
-```## async readDirStructure => DirectoryStructure
-[
-  ["path", "string"]
-]
-```
+<typedef name="readDirStructure" noArgTypesInToc>types/api.xml</typedef>
 
 Reads the structure of the directory.
 

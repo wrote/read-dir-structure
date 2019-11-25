@@ -11,9 +11,10 @@
     "test-all": "yarn-s test test-build",
     "test-watch": "yarn test -w",
     "lint": "eslint .",
-    "doc": "NODE_DEBUG=doc doc documentary -o README.md",
-    "d": "typal src/index.js -c",
-    "externs": "typal externs.js -e",
+    "doc": "NODE_DEBUG=doc doc -o README.md -n _wrote",
+    "d": "yarn-s d1 externs",
+    "d1": "typal src/index.js -c",
+    "externs": "typal types/externs.js",
     "e": "alanode",
     "example/": "yarn e example/example",
     "b": "alamode src -o build -s",
@@ -22,9 +23,9 @@
   "files": [
     "build",
     "src",
-    "externs.js"
+    "types"
   ],
-  "externs": "externs.js",
+  "externs": "types/externs.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/wrote/read-dir-structure.git"

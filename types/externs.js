@@ -1,4 +1,4 @@
-/* typal types/index.xml */
+/* typal types/index.xml externs */
 /** @const */
 var _readDirStructure = {}
 /**

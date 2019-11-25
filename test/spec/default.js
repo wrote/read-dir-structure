@@ -1,4 +1,4 @@
-import { equal } from 'zoroaster/assert'
+import { equal } from '@zoroaster/assert'
 import Context from '../context'
 import readDirStructure, { getFiles } from '../../src'
 
@@ -14,6 +14,12 @@ const T = {
   },
   async 'reads a nested directory structure'({ NESTED_FIXTURES_TEST_DIR }) {
     const res = await readDirStructure(NESTED_FIXTURES_TEST_DIR)
+    return res
+  },
+  async 'ignores some dirs'({ NESTED_FIXTURES_TEST_DIR }) {
+    const res = await readDirStructure(NESTED_FIXTURES_TEST_DIR, {
+      ignore: ['run-dmc'],
+    })
     return res
   },
   async 'flattens the file list'({ NESTED_FIXTURES_TEST_DIR }) {

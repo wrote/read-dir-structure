@@ -1,0 +1,8 @@
+{
+  "content": {
+    "hello.txt": {
+      "type": "File"
+    }
+  },
+  "type": "Directory"
+}

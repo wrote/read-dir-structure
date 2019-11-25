@@ -5,7 +5,7 @@
 `@wrote/read-dir-structure` is Node.JS package to a read directory structure.
 
 ```sh
-yarn add -E @wrote/read-dir-structure
+yarn add @wrote/read-dir-structure
 ```
 
 ## Table Of Contents

@@ -1,11 +1,11 @@
 # @wrote/read-dir-structure
 
-[![npm version](https://badge.fury.io/js/%40wrote%2Fread-dir-structure.svg)](https://npmjs.org/package/@wrote/read-dir-structure)
+[![npm version](https://badge.fury.io/js/%40wrote%2Fread-dir-structure.svg)](https://www.npmjs.com/package/@wrote/read-dir-structure)
 
 `@wrote/read-dir-structure` is Node.JS package to a read directory structure.
 
 ```sh
-yarn add -E @wrote/read-dir-structure
+yarn add @wrote/read-dir-structure
 ```
 
 ## Table Of Contents
@@ -13,8 +13,8 @@ yarn add -E @wrote/read-dir-structure
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
 - [Types](#types)
-- [`async readDirStructure(path: string): DirectoryStructure`](#async-readdirstructurepath-string-directorystructure)
-- [`async getFiles(content: Content, path: string): Array<string>`](#async-getfilescontent-contentpath-string-arraystring)
+- [`async readDirStructure(dirPath, opts=): DirectoryStructure`](#async-readdirstructuredirpath-stringopts-readdirstructureopts-directorystructure)
+- [`getFiles(content, path): !Array<string>`](#getfilescontent-contentpath-string-array)
 - [Reasons for Errors](#reasons-for-errors)
 - [Copyright](#copyright)
 
@@ -32,18 +32,24 @@ The types and [externs](externs.js) for _Google Closure Compiler_ via [**_Depack
 
 The return type of the function is a _DirectoryStructure_. It is a recursive object, where items have either `File`, `Directory` or `SymLink` types specified in the `type` field, and if the item is a directory, it has the `content` property which is another _DirectoryStructure_.
 
-`Object<string, !DirectoryStructure>` __<a name="type-content">`Content`</a>__: The recursive content of the directory.
+<code>Object&lt;string, <a href="#type-directorystructure" title="A directory structure representation.">!DirectoryStructure</a>&gt;</code> __<a name="type-content">`Content`</a>__: The recursive content of the directory.
 
 __<a name="type-directorystructure">`DirectoryStructure`</a>__: A directory structure representation.
 
-|  Name   |            Type             |                    Description                    |
-| ------- | --------------------------- | ------------------------------------------------- |
-| type    | _string_                    | The type of the item.                             |
-| content | _[!Content](#type-content)_ | The recursive content if the item is a directory. |
+|  Name   |                                             Type                                              |                    Description                    |
+| ------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| type    | <em>string</em>                                                                               | The type of the item.                             |
+| content | <em><a href="#type-content" title="The recursive content of the directory.">!Content</a></em> | The recursive content if the item is a directory. |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/0.svg?sanitize=true">
+</a></p>
 
-## `async readDirStructure(`<br/>&nbsp;&nbsp;`path: string,`<br/>`): DirectoryStructure`
+## <code>async <ins>readDirStructure</ins>(</code><sub><br/>&nbsp;&nbsp;`dirPath: string,`<br/>&nbsp;&nbsp;`opts=: !ReadDirStructureOpts,`<br/></sub><code>): <i>DirectoryStructure</i></code>
+Read a directory, and return its structure as an object. Only `Files`, `Directories` and `Symlinks` are included!
+
+ - <kbd><strong>dirPath*</strong></kbd> <em>`string`</em>: Path to the directory.
+ - <kbd>opts</kbd> <em>`!ReadDirStructureOpts`</em> (optional): The options.
 
 Reads the structure of the directory.
 
@@ -90,12 +96,16 @@ Output for the [`example/directory`](example/directory):
 }
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/1.svg?sanitize=true">
+</a></p>
 
 
-## `async getFiles(`<br/>&nbsp;&nbsp;`content: Content,`<br/>&nbsp;&nbsp;`path: string,`<br/>`): Array<string>`
-
+## <code><ins>getFiles</ins>(</code><sub><br/>&nbsp;&nbsp;`content: !Content,`<br/>&nbsp;&nbsp;`path: string,`<br/></sub><code>): <i>!Array<string></i></code>
 After running the `readDirStructure`, this function can be used to flatten the `content` output and return the list of all files (not including symlinks).
+
+ - <kbd><strong>content*</strong></kbd> <em><code><a href="1-structure.md#type-content" title="The recursive content of the directory.">!Content</a></code></em>: The content from the `readDirStructure` result.
+ - <kbd><strong>path*</strong></kbd> <em>`string`</em>: The original path to the directory.
 
 ```js
 /* yarn example/ */
@@ -118,7 +128,9 @@ import readDirStructure, { getFiles } from '@wrote/read-dir-structure'
 ]
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/2.svg?sanitize=true">
+</a></p>
 
 ## Reasons for Errors
 
@@ -131,7 +143,9 @@ The following errors can happen and have been [context tested](test/spec/errors.
 | passing a path to a file          | `ENOTDIR` | Path is not a directory                                |
 | directory does not exist          | `ENOENT` | ENOENT: no such file or directory, lstat '%DIRECTORY%' |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/3.svg?sanitize=true">
+</a></p>
 
 ## Copyright
 
@@ -139,23 +153,26 @@ The following errors can happen and have been [context tested](test/spec/errors.
   <tr>
     <th>
       <a href="https://artd.eco">
-        <img src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png" alt="Art Deco" />
+        <img width="100" src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png"
+          alt="Art Deco">
       </a>
     </th>
     <th>© <a href="https://artd.eco">Art Deco</a> for <a href="https://wrote.cc">Wrote</a> 2019</th>
     <th>
       <a href="https://wrote.cc">
-        <img src="https://avatars3.githubusercontent.com/u/40831417?s=100" width="100" alt="Wrote" />
+        <img src="https://avatars3.githubusercontent.com/u/40831417?s=100" width="100" alt="Wrote">
       </a>
     </th>
     <th>
       <a href="https://www.technation.sucks" title="Tech Nation Visa">
-        <img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif"
-          alt="Tech Nation Visa" />
+        <img width="100" src="https://raw.githubusercontent.com/idiocc/cookies/master/wiki/arch4.jpg"
+          alt="Tech Nation Visa">
       </a>
     </th>
     <th><a href="https://www.technation.sucks">Tech Nation Visa Sucks</a></th>
   </tr>
 </table>
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents">
+  <img src="/.documentary/section-breaks/-1.svg?sanitize=true">
+</a></p>

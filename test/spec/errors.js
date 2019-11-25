@@ -1,4 +1,4 @@
-import { throws } from 'zoroaster/assert'
+import { throws } from '@zoroaster/assert'
 import Context from '../context'
 import readDirStructure from '../../src'
 

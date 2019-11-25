@@ -1,0 +1,18 @@
+<types namespace="_wrote">
+  <method async name="readDirStructure"
+    return="_wrote.DirectoryStructure">
+    <arg string name="dirPath">Path to the directory.</arg>
+    <arg type="!_wrote.ReadDirStructureOpts" name="opts" opt>
+      The options.
+    </arg>
+    Read a directory, and return its structure as an object. Only `Files`, `Directories` and `Symlinks` are included!
+  </method>
+  <method name="getFiles"
+    return="!Array<string>">
+    <arg type="!_wrote.Content" name="content">The content from the `readDirStructure` result.</arg>
+    <arg string name="path">
+      The original path to the directory.
+    </arg>
+    After running the `readDirStructure`, this function can be used to flatten the `content` output and return the list of all files (not including symlinks).
+  </method>
+</types>

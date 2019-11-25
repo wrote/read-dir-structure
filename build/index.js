@@ -79,7 +79,7 @@ const res = await readDirStructure('dir')
 }
 ```
  */
-               async function readDirStructure(dirPath) {
+async function readDirStructure(dirPath) {
   if (!dirPath) {
     throw new Error('Please specify a path to the directory')
   }
@@ -129,7 +129,7 @@ const res = await readDirStructure('dir')
  * @param {!_readDirStructure.Content} content The recursive content of the directory.
  * @param {string} path The path to the directory.
  */
-       const getFiles = (content, path) => {
+const getFiles = (content, path) => {
   let files = []
   let dirs = []
   Object.keys(content).forEach((key) => {

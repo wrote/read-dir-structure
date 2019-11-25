@@ -1,6 +1,6 @@
 import { lstat, readdir } from 'fs'
 import makePromise from 'makepromise'
-import { join } from 'path'
+import { join, relative } from 'path'
 
 /**
  * Update information about directory's content with lstat.
@@ -56,33 +56,35 @@ const getType = (lstatRes) => {
 /**
  * Read a directory, and return its structure as an object. Only `Files`, `Directories` and `Symlinks` are included!
  * @param {string} dirPath Path to the directory.
- * @returns {Promise<_readDirStructure.DirectoryStructure>} An object reflecting the directory structure.
+ * @param {!_readDirStructure.ReadDirStructureOpts} [opts] The options.
+ * @returns {!Promise<_readDirStructure.DirectoryStructure>} An object reflecting the directory structure.
  * @example
-```js
-const res = await readDirStructure('dir')
-// result:
-{
-  type: 'Directory',
-  content: {
-    'data.txt': {
-      type: 'File'
-    },
-    subdir: {
-      type: 'Directory',
-      content: {
-        'data-ln.txt': {
-          type: 'SymbolicLink'
-        },
+  ```js
+  const res = await readDirStructure('dir')
+  // result:
+  {
+    type: 'Directory',
+    content: {
+      'data.txt': {
+        type: 'File'
+      },
+      subdir: {
+        type: 'Directory',
+        content: {
+          'data-ln.txt': {
+            type: 'SymbolicLink'
+          },
+        }
       }
     }
   }
-}
-```
+  ```
  */
-export default async function readDirStructure(dirPath) {
+export default async function readDirStructure(dirPath, opts = {}) {
   if (!dirPath) {
     throw new Error('Please specify a path to the directory')
   }
+  const { ignore = [] } = opts
   const ls = await makePromise(lstat, dirPath)
   if (!ls.isDirectory()) {
     const err = new Error('Path is not a directory')
@@ -106,6 +108,8 @@ export default async function readDirStructure(dirPath) {
   }, {})
 
   const dirs = await directories.reduce(async (acc, { path, relativePath }) => {
+    const rel = relative(dirPath, path)
+    if (ignore.includes(rel)) return acc
     const res = await acc
     const structure = await readDirStructure(path)
     return {
@@ -157,6 +161,15 @@ export const getFiles = (content, path) => {
  * @prop {!fs.Stats} lstat The stats of the item.
  * @prop {string} path The full path of the item.
  * @prop {string} relativePath The name of the item.
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {_readDirStructure.ReadDirStructureOpts} ReadDirStructureOpts Options for reading the dir structure.
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {Object} _readDirStructure.ReadDirStructureOpts Options for reading the dir structure.
+ * @prop {!Array<string>} [ignore] The list of paths inside of the directory to ignore, e.g., `[.git]`.
  */
 /**
  * @suppress {nonStandardJsDocs}
